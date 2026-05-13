@@ -1,0 +1,74 @@
+# ─────────────────────────────────────────────────────────────────────────
+# Translation sync — two enforcement gates for the privacy site
+#
+#  GATE 1 (check_translation_sync.py)
+#    Verifies every locale in _data/locales.yml has its index.md present
+#    and that its `last_updated` front-matter field matches the English
+#    source. When you bump English's `last_updated`, every translation
+#    must be brought up to date in the SAME PR — otherwise CI fails.
+#
+#  GATE 2 (check_app_parity.py)
+#    Verifies that the locale set declared by _data/locales.yml matches
+#    the locales the WristBuddy iOS app actually ships in its String
+#    Catalog. Catches the case where the app adds or drops a language
+#    but the privacy site doesn't follow.
+#
+# Triggers:
+#   - On every PR / push to main that touches translation surfaces (gate 1
+#     is the relevant one here)
+#   - On every PR / push to main, regardless of paths (gate 2 — needed
+#     because the app catalog change may not touch this repo at all)
+#   - Weekly on Mondays (catches app divergence even without site changes)
+#   - Manually via the Actions tab
+# ─────────────────────────────────────────────────────────────────────────
+name: Translation sync
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 9 * * 1"   # Mondays 09:00 UTC — catches silent app drift
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: translation-sync-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PyYAML
+        run: pip install --quiet pyyaml
+
+      - name: Gate 1 — translations in sync with English source
+        run: python3 .github/scripts/check_translation_sync.py
+
+      - name: Gate 2 — site locales match the app's String Catalog
+        env:
+          # Public repo path to the WristBuddy iOS String Catalog.
+          # Override these via repo Variables (Actions → Variables) if
+          # the source layout changes.
+          APP_REPO: ${{ vars.APP_REPO || 'mariolonghi/WristBuddy' }}
+          APP_CATALOG_PATH: ${{ vars.APP_CATALOG_PATH || 'WristBuddy/WristBuddy/Localizable.xcstrings' }}
+          # If the app repo is private, set ACTIONS_STEP_DEBUG=true and
+          # add a PAT secret named APP_REPO_TOKEN (read-only Contents
+          # scope is enough). Falls back to the default GITHUB_TOKEN
+          # which only works for public repos.
+          GH_TOKEN: ${{ secrets.APP_REPO_TOKEN || secrets.GITHUB_TOKEN }}
+          # When STRICT=true, network failure fails the workflow.
+          # Default false so a transient outage never blocks a docs PR.
+          STRICT: "false"
+        run: python3 .github/scripts/check_app_parity.py

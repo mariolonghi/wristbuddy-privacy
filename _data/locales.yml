@@ -1,0 +1,26 @@
+# ─── Source of truth for the privacy site's available languages ─────────
+#
+# This list MUST mirror the locales the WristBuddy iOS app ships in its
+# String Catalog (WristBuddy/Localizable.xcstrings).
+#
+# When you add or remove a locale in the app catalog, update this file in
+# the SAME PR / commit. The translation-sync GitHub Actions workflow
+# verifies parity with the app catalog and fails CI on divergence.
+#
+# Field reference:
+#   code  — BCP-47 code Apple uses (case-sensitive, matches xcstrings keys)
+#   name  — Endonym shown in the language switcher
+#   file  — Path to the rendered Markdown source in this repo
+#   path  — URL path under baseurl ("/" for the default English page)
+#
+# To add a new language: add an entry below, create <dir>/index.md with
+# the translated content, and bump the language switcher list. The CI
+# script will check the new file's `last_updated` matches English.
+
+locales:
+  - { code: en,    name: "English",            file: "index.md",       path: "/" }
+  - { code: es,    name: "Español",            file: "es/index.md",    path: "/es/" }
+  - { code: fr,    name: "Français",           file: "fr/index.md",    path: "/fr/" }
+  - { code: de,    name: "Deutsch",            file: "de/index.md",    path: "/de/" }
+  - { code: pt-BR, name: "Português (Brasil)", file: "pt-br/index.md", path: "/pt-br/" }
+  - { code: sv,    name: "Svenska",            file: "sv/index.md",    path: "/sv/" }

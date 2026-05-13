@@ -1,12 +1,21 @@
 ---
 layout: default
 title: Wrist Buddy — Privacy Policy
+description: Privacy Policy for the Wrist Buddy iPhone + Apple Watch app.
+lang: en
+permalink: /
+# Single source of truth for the policy date. Translations declare their
+# own `last_updated` in front matter; CI fails the build if any translation
+# drifts from the English value. Bump this when you publish a material
+# change AND make the matching update in every other locale.
+effective_date: 2026-05-13
+last_updated: 2026-05-13
 ---
 
 # Wrist Buddy — Privacy Policy
 
-**Effective date:** 2026-05-13
-**Last updated:** 2026-05-13
+**Effective date:** {{ page.effective_date }}
+**Last updated:** {{ page.last_updated }}
 
 Wrist Buddy is an iPhone and Apple Watch utility app that displays your iPhone's status (battery, charging, network, motion, silent / Focus mode, distance) on your Apple Watch. This policy explains what data the app handles and why — kept short because the answer is "almost nothing."
 

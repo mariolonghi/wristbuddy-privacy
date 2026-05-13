@@ -107,6 +107,31 @@ tbody tr:last-child td { border-bottom: none; }
 .wb-header .name .accent { color: var(--wb-mint-dark); }
 .wb-header .actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
 
+/* ─────── Language switcher (native <select> styled as a pill) ─────── */
+.wb-lang-switcher {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 1px solid var(--wb-line);
+  color: var(--wb-mute);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 30px 8px 14px;
+  border-radius: var(--wb-radius-pill);
+  cursor: pointer;
+  transition: color 0.12s, border-color 0.12s, background 0.12s;
+  /* tiny chevron */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='none' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l4 4 4-4'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 10px 6px;
+}
+.wb-lang-switcher:hover {
+  color: var(--wb-ink);
+  border-color: rgba(27, 27, 31, 0.20);
+}
+
 /* ─────── Dark-mode toggle button ─────── */
 .wb-theme-toggle {
   appearance: none;
@@ -159,7 +184,17 @@ body.wb-dark .wb-theme-toggle {
   border-color: rgba(255, 255, 255, 0.12);
   color: var(--wb-mute-dark);
 }
-body.wb-dark .wb-theme-toggle:hover {
+body.wb-dark .wb-theme-toggle:hover,
+body.wb-dark .wb-lang-switcher:hover {
   color: #fff;
   border-color: rgba(255, 255, 255, 0.25);
+}
+body.wb-dark .wb-lang-switcher {
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--wb-mute-dark);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='none' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l4 4 4-4'/></svg>");
+}
+body.wb-dark .wb-lang-switcher option {
+  background: var(--wb-ink);
+  color: rgba(242, 242, 247, 0.92);
 }
