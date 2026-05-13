@@ -1,0 +1,19 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <title>WristBuddy Mark · Mint</title>
+  <desc>Glyph only — Hand &amp; Bolt in mint, transparent background. Use on dark surfaces.</desc>
+  <g transform="rotate(-90 512 512)">
+    <g fill="#63E6E2" opacity="0.55">
+      <path d="M 396 460 L 632 460 Q 692 460 692 520 L 692 660 C 692 712 612 712 612 760 L 612 880 Q 612 920 572 920 L 452 920 Q 412 920 412 880 L 412 760 C 412 712 336 712 336 660 L 336 520 Q 336 460 396 460 Z"></path>
+      <rect x="353" y="152" width="72" height="400" rx="36"></rect>
+      <rect x="435" y="138" width="72" height="414" rx="36"></rect>
+      <rect x="517" y="152" width="72" height="400" rx="36"></rect>
+      <rect x="599" y="172" width="72" height="380" rx="36"></rect>
+      <g transform="rotate(38 720 500)">
+        <rect x="668" y="392" width="104" height="288" rx="52"></rect>
+      </g>
+    </g>
+  </g>
+  <g transform="translate(564 303) scale(0.4)" fill="#63E6E2">
+    <path d="M 612 96 L 348 552 L 488 552 L 412 928 L 720 448 L 560 448 Z"></path>
+  </g>
+</svg>

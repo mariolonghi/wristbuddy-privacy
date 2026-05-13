@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{ page.title | default: site.title }}</title>
+  <meta name="description" content="{{ site.description }}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#1B1B1F" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/favicon/icon-32.png' | relative_url }}" />
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ '/favicon/icon-16.png' | relative_url }}" />
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ '/favicon/icon-180.png' | relative_url }}" />
+  <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}" />
+
+  <!-- OG / Twitter card -->
+  <meta property="og:title" content="WristBuddy · Privacy" />
+  <meta property="og:description" content="Your iPhone's status, on your wrist. Pay once. No cloud, no account." />
+  <meta property="og:image" content="{{ '/og-image.png' | absolute_url }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ page.url | absolute_url }}" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Brand fonts (preconnect for faster paint) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="{{ '/assets/styles.css' | relative_url }}" />
+
+  <!-- Set initial dark/light class BEFORE body paints to avoid flash -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('wb-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var dark = stored ? stored === 'dark' : prefersDark;
+        if (dark) document.documentElement.classList.add('wb-dark-pending');
+      } catch (e) {}
+    })();
+  </script>
+  <style>
+    /* Mirror body.wb-dark on <html> so the no-flash script can paint dark immediately */
+    html.wb-dark-pending { background: #1B1B1F; }
+    html.wb-dark-pending body { background: #1B1B1F; color: rgba(242, 242, 247, 0.92); }
+  </style>
+</head>
+
+<body>
+  <div class="wb-page">
+
+    <header class="wb-header">
+      <a class="brand" href="{{ '/' | relative_url }}">
+        <img class="logo" src="{{ '/assets/icon-rounded.svg' | relative_url }}" alt="WristBuddy logo" />
+        <span class="name"><span>Wrist</span><span class="accent">Buddy</span></span>
+      </a>
+      <div class="actions">
+        <button id="wb-theme-toggle" class="wb-theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">
+          <span class="icon" aria-hidden="true">◐</span>
+          <span class="label">Theme</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      {{ content }}
+    </main>
+
+    <footer class="wb-footer">
+      <div class="left">
+        <img src="{{ '/assets/icon-rounded.svg' | relative_url }}" alt="" />
+        <span>© WristBuddy. Pay once. No cloud. No account.</span>
+      </div>
+      <div><a href="mailto:wristbuddyapp+policy@gmail.com">Contact</a></div>
+    </footer>
+
+  </div>
+
+  <!-- Dark-mode toggle: persists choice to localStorage, defaults to OS preference -->
+  <script>
+    (function () {
+      var btn = document.getElementById('wb-theme-toggle');
+      if (!btn) return;
+
+      function apply(dark) {
+        document.body.classList.toggle('wb-dark', dark);
+        document.documentElement.classList.remove('wb-dark-pending');
+        btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+      }
+
+      // Initial paint based on saved preference (or OS)
+      var stored = null;
+      try { stored = localStorage.getItem('wb-theme'); } catch (e) {}
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      apply(stored ? stored === 'dark' : prefersDark);
+
+      btn.addEventListener('click', function () {
+        var nowDark = !document.body.classList.contains('wb-dark');
+        apply(nowDark);
+        try { localStorage.setItem('wb-theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+      });
+    })();
+  </script>
+</body>
+</html>

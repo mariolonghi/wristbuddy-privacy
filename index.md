@@ -1,3 +1,8 @@
+---
+layout: default
+title: Wrist Buddy — Privacy Policy
+---
+
 # Wrist Buddy — Privacy Policy
 
 **Effective date:** 2026-05-13

@@ -1,4 +1,16 @@
 title: Wrist Buddy — Privacy Policy
 description: Privacy Policy for the Wrist Buddy iPhone + Apple Watch app.
-theme: jekyll-theme-cayman
+
+# Custom domain at user level (mariolonghi.com is configured as the GitHub
+# Pages CNAME on the user account, so this repo is served under the
+# /wristbuddy-privacy/ path prefix). baseurl + url are needed so Liquid's
+# `relative_url` / `absolute_url` filters resolve asset paths correctly.
+url: https://mariolonghi.com
+baseurl: /wristbuddy-privacy
+
+# No theme — the WristBuddy design system shell ships in _layouts/default.html
+# and assets/styles.css. Any built-in theme would inject competing CSS.
 show_downloads: false
+
+# Markdown engine (GitHub Pages default — explicit for clarity).
+markdown: kramdown
