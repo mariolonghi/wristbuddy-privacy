@@ -1,16 +1,13 @@
-title: Wrist Buddy — Privacy Policy
-description: Privacy Policy for the Wrist Buddy iPhone + Apple Watch app.
-
-# Custom domain at user level (mariolonghi.com is configured as the GitHub
-# Pages CNAME on the user account, so this repo is served under the
-# /wristbuddy-privacy/ path prefix). baseurl + url are needed so Liquid's
-# `relative_url` / `absolute_url` filters resolve asset paths correctly.
+title: Wrist Buddy — Privacy Policy (archived; see wristbuddy.app/privacy/)
+description: Legacy URL for the Wrist Buddy privacy policy — redirects to wristbuddy.app/privacy/.
 url: https://mariolonghi.com
 baseurl: /wristbuddy-privacy
 
-# No theme — the WristBuddy design system shell ships in _layouts/default.html
-# and assets/styles.css. Any built-in theme would inject competing CSS.
-show_downloads: false
+# Single-purpose now: 301-redirect every page in this repo to the
+# canonical location on wristbuddy.app. `jekyll-redirect-from` is
+# whitelisted by GitHub Pages and emits meta-refresh + canonical-link
+# stubs for each `redirect_to:` front-matter entry.
+plugins:
+  - jekyll-redirect-from
 
-# Markdown engine (GitHub Pages default — explicit for clarity).
 markdown: kramdown
